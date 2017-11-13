@@ -8,7 +8,7 @@ Add /lib/infographicsSVG.js and then call doGraph function with this sintax:
 
 doGraph(number of lines, itens per column, array with integer percentage and color, type - box, humans, circle, destination tag id). 
 
-See graph.html
+See <a href="https://luizcruz.github.io/infographicsSVG/graph.html">graph.html</a> for examples.
 
 ## Todo
 
