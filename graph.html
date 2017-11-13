@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>SVG graphics simple lib</title>
+		<script src="lib/infographicSVG.js"></script>
+	</head>
+	<body>
+		<article>
+			<p>United States presidential election, 2016 by state - 31 (30 plus ME) Republican, versus 21 (20 plus DC) Democratic</p>
+			<div id="presidential-race"></div>
+			<p>Voting age population versus turnout (VAP 250,056,000 people versus 138,847,000 turnout people)
+			<div id="vap"></div>
+			<p>Party balance research - 38% of registered voters said they think of themselves as Democrats, 25% as Republicans, and 33% as independents 
+			<div id="party"></div>
+		</article>
+		<script>
+			//doGraph(number of lines, itens per column, array with integer percentage and color, type - box, humans, circle, destination id)
+			doGraph(40,10,[[63,'red'],[33,'blue']],'humans', 'presidential-race');
+			doGraph(40,10,[[45,'red'],[55,'black']],'box', 'vap');
+			doGraph(40,10,[[38,'red'],[25,'blue'],[33,'dark']],'circle', 'party');
+		</script>
+
+	</body>
+</html>
+
+
+
+
+
+
