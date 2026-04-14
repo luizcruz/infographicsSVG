@@ -4,28 +4,71 @@
 		<meta charset="UTF-8">
 		<title>SVG graphics simple lib</title>
 		<script src="lib/infographicSVG.js"></script>
+		<style>
+			body { font-family: sans-serif; max-width: 900px; margin: 20px auto; padding: 0 16px; }
+			h2 { margin-top: 2em; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+			.legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 4px; font-size: 0.85em; }
+			.legend-item { display: flex; align-items: center; gap: 6px; }
+			.legend-color { width: 14px; height: 14px; border-radius: 2px; display: inline-block; border: 1px solid #aaa; }
+		</style>
 	</head>
 	<body>
-		<article>
-			<p>United States presidential election, 2016 by state - 31 (30 plus ME) Republican, versus 21 (20 plus DC) Democratic</p>
-			<div id="presidential-race"></div>
-			<p>Voting age population versus turnout (VAP 250,056,000 people versus 138,847,000 turnout people)
-			<div id="vap"></div>
-			<p>Party balance research - 38% of registered voters said they think of themselves as Democrats, 25% as Republicans, and 33% as independents 
-			<div id="party"></div>
-		</article>
-		<script>
-			//doGraph(number of lines, itens per column, array with integer percentage and color, type - box, humans, circle, destination id)
-			doGraph(40,10,[[63,'red'],[33,'blue']],'humans', 'presidential-race');
-			doGraph(40,10,[[45,'red'],[55,'black']],'box', 'vap');
-			doGraph(40,10,[[38,'red'],[25,'blue'],[33,'dark']],'circle', 'party');
-		</script>
+		<h1>Infográficos SVG</h1>
 
+		<!-- ── Exemplos originais ─────────────────────────────────── -->
+
+		<h2>Eleição presidencial dos EUA, 2016</h2>
+		<p>31 estados Republicanos vs. 21 estados Democratas</p>
+		<div id="presidential-race"></div>
+
+		<h2>Participação eleitoral (VAP)</h2>
+		<p>250.056.000 em idade de votar vs. 138.847.000 votos apurados</p>
+		<div id="vap"></div>
+
+		<h2>Equilíbrio partidário</h2>
+		<p>38% Democratas, 25% Republicanos, 33% Independentes</p>
+		<div id="party"></div>
+
+		<!-- ── Novos exemplos esportivos ──────────────────────────── -->
+
+		<h2>⚽ Bola de futebol — Resultados da Copa do Mundo FIFA 2022</h2>
+		<p>Fase de Grupos: 48 partidas</p>
+		<div class="legend">
+			<span class="legend-item"><span class="legend-color" style="background:#27ae60"></span> Vitória do time 1 (~40%)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#f1c40f"></span> Empate (~25%)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#e74c3c"></span> Vitória do time 2 (~35%)</span>
+		</div>
+		<div id="copa-resultados"></div>
+
+		<h2>🏆 Taça — Campeões da Copa do Mundo FIFA (1930–2022)</h2>
+		<p>22 edições: cada taça representa um título</p>
+		<div class="legend">
+			<span class="legend-item"><span class="legend-color" style="background:#009c3b"></span> Brasil (5)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#1d1d1d"></span> Alemanha (4)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#009246"></span> Itália (4)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#74acdf"></span> Argentina (3)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#0055a4"></span> França (2)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#aaaaaa"></span> Outros: Uruguai, Inglaterra, Espanha (4)</span>
+		</div>
+		<div id="copa-campeoes"></div>
+
+		<script>
+			// doGraph(total de itens, itens por coluna, [[% , cor], ...], tipo, id do elemento)
+
+			// --- Exemplos originais ---
+			doGraph(40, 10, [[63,'red'],[33,'blue']], 'humans', 'presidential-race');
+			doGraph(40, 10, [[45,'red'],[55,'black']], 'box', 'vap');
+			doGraph(40, 10, [[38,'red'],[25,'blue'],[33,'dark']], 'circle', 'party');
+
+			// --- Novos: bola de futebol ---
+			// 48 jogos, 12 por coluna → 4 linhas
+			doGraph(48, 12, [[40,'#27ae60'],[25,'#f1c40f'],[35,'#e74c3c']], 'soccer', 'copa-resultados');
+
+			// --- Novos: taça de campeão ---
+			// 22 edições da Copa do Mundo, 6 taças por coluna → 4 linhas
+			// Percentuais ajustados para distribuição exata: Brasil 5, Alemanha 4,
+			// Itália 4, Argentina 3, França 2, Outros (Uruguai/Inglaterra/Espanha) 4
+			doGraph(22, 6, [[22,'#009c3b'],[18,'#1d1d1d'],[18,'#009246'],[13,'#74acdf'],[9,'#0055a4'],[20,'#aaaaaa']], 'trophy', 'copa-campeoes');
+		</script>
 	</body>
 </html>
-
-
-
-
-
-
