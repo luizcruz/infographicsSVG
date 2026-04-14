@@ -14,20 +14,40 @@
 	</head>
 	<body>
 		<h1>Infográficos SVG</h1>
+		<p>
+			Os infográficos são declarados diretamente no HTML via atributos <code>data-infographic</code>,
+			sem necessidade de chamar funções JavaScript. A biblioteca inicializa automaticamente ao
+			carregar a página.
+		</p>
 
 		<!-- ── Exemplos originais ─────────────────────────────────── -->
 
 		<h2>Eleição presidencial dos EUA, 2016</h2>
 		<p>31 estados Republicanos vs. 21 estados Democratas</p>
-		<div id="presidential-race"></div>
+		<div data-infographic
+		     data-items="40"
+		     data-per-column="10"
+		     data-type="humans"
+		     data-segments="63,red;33,blue">
+		</div>
 
 		<h2>Participação eleitoral (VAP)</h2>
 		<p>250.056.000 em idade de votar vs. 138.847.000 votos apurados</p>
-		<div id="vap"></div>
+		<div data-infographic
+		     data-items="40"
+		     data-per-column="10"
+		     data-type="box"
+		     data-segments="45,red;55,black">
+		</div>
 
 		<h2>Equilíbrio partidário</h2>
 		<p>38% Democratas, 25% Republicanos, 33% Independentes</p>
-		<div id="party"></div>
+		<div data-infographic
+		     data-items="40"
+		     data-per-column="10"
+		     data-type="circle"
+		     data-segments="38,red;25,blue;33,dark">
+		</div>
 
 		<!-- ── Novos exemplos esportivos ──────────────────────────── -->
 
@@ -38,7 +58,12 @@
 			<span class="legend-item"><span class="legend-color" style="background:#f1c40f"></span> Empate (~25%)</span>
 			<span class="legend-item"><span class="legend-color" style="background:#e74c3c"></span> Vitória do time 2 (~35%)</span>
 		</div>
-		<div id="copa-resultados"></div>
+		<div data-infographic
+		     data-items="48"
+		     data-per-column="12"
+		     data-type="soccer"
+		     data-segments="40,#27ae60;25,#f1c40f;35,#e74c3c">
+		</div>
 
 		<h2>🏆 Taça — Campeões da Copa do Mundo FIFA (1930–2022)</h2>
 		<p>22 edições: cada taça representa um título</p>
@@ -50,25 +75,12 @@
 			<span class="legend-item"><span class="legend-color" style="background:#0055a4"></span> França (2)</span>
 			<span class="legend-item"><span class="legend-color" style="background:#aaaaaa"></span> Outros: Uruguai, Inglaterra, Espanha (4)</span>
 		</div>
-		<div id="copa-campeoes"></div>
+		<div data-infographic
+		     data-items="22"
+		     data-per-column="6"
+		     data-type="trophy"
+		     data-segments="22,#009c3b;18,#1d1d1d;18,#009246;13,#74acdf;9,#0055a4;20,#aaaaaa">
+		</div>
 
-		<script>
-			// doGraph(total de itens, itens por coluna, [[% , cor], ...], tipo, id do elemento)
-
-			// --- Exemplos originais ---
-			doGraph(40, 10, [[63,'red'],[33,'blue']], 'humans', 'presidential-race');
-			doGraph(40, 10, [[45,'red'],[55,'black']], 'box', 'vap');
-			doGraph(40, 10, [[38,'red'],[25,'blue'],[33,'dark']], 'circle', 'party');
-
-			// --- Novos: bola de futebol ---
-			// 48 jogos, 12 por coluna → 4 linhas
-			doGraph(48, 12, [[40,'#27ae60'],[25,'#f1c40f'],[35,'#e74c3c']], 'soccer', 'copa-resultados');
-
-			// --- Novos: taça de campeão ---
-			// 22 edições da Copa do Mundo, 6 taças por coluna → 4 linhas
-			// Percentuais ajustados para distribuição exata: Brasil 5, Alemanha 4,
-			// Itália 4, Argentina 3, França 2, Outros (Uruguai/Inglaterra/Espanha) 4
-			doGraph(22, 6, [[22,'#009c3b'],[18,'#1d1d1d'],[18,'#009246'],[13,'#74acdf'],[9,'#0055a4'],[20,'#aaaaaa']], 'trophy', 'copa-campeoes');
-		</script>
 	</body>
 </html>
