@@ -10,6 +10,23 @@
 			.legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 4px; font-size: 0.85em; }
 			.legend-item { display: flex; align-items: center; gap: 6px; }
 			.legend-color { width: 14px; height: 14px; border-radius: 2px; display: inline-block; border: 1px solid #aaa; }
+			.team-grid {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 24px;
+				margin: 16px 0;
+			}
+			.team-card {
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				padding: 12px 16px;
+				min-width: 130px;
+				text-align: center;
+				background: #fafafa;
+			}
+			.team-card .team-name { font-weight: bold; margin-bottom: 4px; }
+			.team-card .team-count { font-size: 2em; line-height: 1; }
+			.team-card .team-label { font-size: 0.75em; color: #666; }
 		</style>
 	</head>
 	<body>
@@ -49,10 +66,13 @@
 		     data-segments="38,red;25,blue;33,dark">
 		</div>
 
-		<!-- ── Novos exemplos esportivos ──────────────────────────── -->
+		<!-- ── Exemplos esportivos: bola de futebol ───────────────── -->
 
-		<h2>⚽ Bola de futebol — Resultados da Copa do Mundo FIFA 2022</h2>
-		<p>Fase de Grupos: 48 partidas</p>
+		<h2>⚽ Top 5 Seleções — Vitórias na Copa do Mundo FIFA</h2>
+		<p>
+			Cada bola representa uma das 64 partidas da Copa do Mundo FIFA 2022 no Catar.
+			Cor indica o resultado da partida.
+		</p>
 		<div class="legend">
 			<span class="legend-item"><span class="legend-color" style="background:#27ae60"></span> Vitória do time 1 (~40%)</span>
 			<span class="legend-item"><span class="legend-color" style="background:#f1c40f"></span> Empate (~25%)</span>
@@ -65,21 +85,57 @@
 		     data-segments="40,#27ae60;25,#f1c40f;35,#e74c3c">
 		</div>
 
-		<h2>🏆 Taça — Campeões da Copa do Mundo FIFA (1930–2022)</h2>
-		<p>22 edições: cada taça representa um título</p>
+		<!-- ── Exemplos esportivos: taça ──────────────────────────── -->
+
+		<h2>🏆 Top 5 Seleções com mais títulos — Copa do Mundo FIFA (1930–2022)</h2>
+		<p>
+			Cada taça representa <strong>um título</strong> conquistado. As 18 taças pertencem
+			às cinco seleções com mais conquistas na história do torneio.
+		</p>
+
+		<div class="team-grid">
+			<div class="team-card">
+				<div class="team-name" style="color:#009c3b">🇧🇷 Brasil</div>
+				<div class="team-count" style="color:#009c3b">5</div>
+				<div class="team-label">1958 · 1962 · 1970 · 1994 · 2002</div>
+			</div>
+			<div class="team-card">
+				<div class="team-name" style="color:#333">🇩🇪 Alemanha</div>
+				<div class="team-count" style="color:#333">4</div>
+				<div class="team-label">1954 · 1974 · 1990 · 2014</div>
+			</div>
+			<div class="team-card">
+				<div class="team-name" style="color:#0066cc">🇮🇹 Itália</div>
+				<div class="team-count" style="color:#0066cc">4</div>
+				<div class="team-label">1934 · 1938 · 1982 · 2006</div>
+			</div>
+			<div class="team-card">
+				<div class="team-name" style="color:#74acdf">🇦🇷 Argentina</div>
+				<div class="team-count" style="color:#74acdf">3</div>
+				<div class="team-label">1978 · 1986 · 2022</div>
+			</div>
+			<div class="team-card">
+				<div class="team-name" style="color:#0055a4">🇫🇷 França</div>
+				<div class="team-count" style="color:#0055a4">2</div>
+				<div class="team-label">1998 · 2018</div>
+			</div>
+		</div>
+
 		<div class="legend">
 			<span class="legend-item"><span class="legend-color" style="background:#009c3b"></span> Brasil (5)</span>
-			<span class="legend-item"><span class="legend-color" style="background:#1d1d1d"></span> Alemanha (4)</span>
-			<span class="legend-item"><span class="legend-color" style="background:#009246"></span> Itália (4)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#333333"></span> Alemanha (4)</span>
+			<span class="legend-item"><span class="legend-color" style="background:#0066cc"></span> Itália (4)</span>
 			<span class="legend-item"><span class="legend-color" style="background:#74acdf"></span> Argentina (3)</span>
 			<span class="legend-item"><span class="legend-color" style="background:#0055a4"></span> França (2)</span>
-			<span class="legend-item"><span class="legend-color" style="background:#aaaaaa"></span> Outros: Uruguai, Inglaterra, Espanha (4)</span>
 		</div>
+		<!-- 18 taças no total: cada uma = 1 título. 5 por coluna → 4 linhas (5+5+5+3).
+		     Percentuais calculados para distribuir exatamente 5,4,4,3,2 taças:
+		     26% → 5 Brasil | 22% → 4 Alemanha | 22% → 4 Itália | 16% → 3 Argentina | 14% → 2 França -->
 		<div data-infographic
-		     data-items="22"
-		     data-per-column="6"
+		     data-items="18"
+		     data-per-column="5"
 		     data-type="trophy"
-		     data-segments="22,#009c3b;18,#1d1d1d;18,#009246;13,#74acdf;9,#0055a4;20,#aaaaaa">
+		     data-segments="26,#009c3b;22,#333333;22,#0066cc;16,#74acdf;14,#0055a4">
 		</div>
 
 	</body>
