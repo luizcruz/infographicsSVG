@@ -1,0 +1,13 @@
+{
+  "name": "infographicssvg",
+  "version": "1.0.0",
+  "description": "Infographic SVG visualisation library",
+  "main": "lib/infographicSVG.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0"
+  }
+}
