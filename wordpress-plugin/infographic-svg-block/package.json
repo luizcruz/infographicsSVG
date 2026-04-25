@@ -6,7 +6,8 @@
         "build": "wp-scripts build",
         "start": "wp-scripts start",
         "lint:js": "wp-scripts lint-js",
-        "sync-lib": "node scripts/sync-lib.js"
+        "sync-lib": "node scripts/sync-lib.js",
+        "test": "wp-scripts test-unit-js"
     },
     "devDependencies": {
         "@wordpress/scripts": "^29.0.0"
