@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "infographic-svg/block",
+    "version": "1.0.0",
+    "title": "Infographic SVG",
+    "category": "media",
+    "icon": "chart-bar",
+    "description": "Renders an SVG pictogram infographic (humans, box, circle, soccer, trophy) from percentage data.",
+    "keywords": ["infographic", "svg", "chart", "pictogram", "soccer", "trophy"],
+    "textdomain": "infographic-svg-block",
+    "attributes": {
+        "items": {
+            "type": "number",
+            "default": 40
+        },
+        "perColumn": {
+            "type": "number",
+            "default": 10
+        },
+        "type": {
+            "type": "string",
+            "default": "humans"
+        },
+        "segments": {
+            "type": "string",
+            "default": "60,#27ae60;40,#e74c3c"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./build/index.js",
+    "editorStyle": "file:./build/index.css",
+    "style": "file:./build/style-index.css",
+    "viewScript": "infographic-svg-lib"
+}

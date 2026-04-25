@@ -1,0 +1,14 @@
+.wp-block-infographic-svg-block {
+    overflow-x: auto;
+
+    // The div that holds the infographic is inline by default;
+    // make it block so it stretches with the block width.
+    [data-infographic] {
+        display: block;
+    }
+
+    svg {
+        max-width: 100%;
+        height: auto;
+    }
+}

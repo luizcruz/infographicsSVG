@@ -1,0 +1,21 @@
+{
+    "name": "infographic-svg-block",
+    "version": "1.0.0",
+    "description": "Gutenberg block for infographicsSVG library",
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start",
+        "lint:js": "wp-scripts lint-js",
+        "sync-lib": "node scripts/sync-lib.js"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^29.0.0"
+    },
+    "dependencies": {
+        "@wordpress/block-editor": "*",
+        "@wordpress/blocks": "*",
+        "@wordpress/components": "*",
+        "@wordpress/element": "*",
+        "@wordpress/i18n": "*"
+    }
+}
