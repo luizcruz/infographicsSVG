@@ -7,9 +7,6 @@
 		<style>
 			body { font-family: sans-serif; max-width: 900px; margin: 20px auto; padding: 0 16px; }
 			h2 { margin-top: 2em; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
-			.legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 4px; font-size: 0.85em; }
-			.legend-item { display: flex; align-items: center; gap: 6px; }
-			.legend-color { width: 14px; height: 14px; border-radius: 2px; display: inline-block; border: 1px solid #aaa; }
 			.team-grid {
 				display: flex;
 				flex-wrap: wrap;
@@ -36,8 +33,29 @@
 			sem necessidade de chamar funções JavaScript. A biblioteca inicializa automaticamente ao
 			carregar a página.
 		</p>
+		<p>
+			Atributos opcionais <code>data-title</code> e <code>data-legend</code> adicionam título e
+			legenda colorida ao infográfico — úteis para infográficos auto-suficientes sem HTML ao redor.
+		</p>
 
-		<!-- ── Exemplos originais ─────────────────────────────────── -->
+		<!-- ── Título e legenda ───────────────────────────────────── -->
+
+		<h2>Título e legenda integrados</h2>
+		<p>
+			Adicione <code>data-title</code> e <code>data-legend</code> para criar um infográfico
+			completamente auto-suficiente. A legenda usa os mesmos <code>data-segments</code>
+			para as cores.
+		</p>
+		<div data-infographic
+		     data-items="20"
+		     data-per-column="10"
+		     data-type="circle"
+		     data-segments="40,#e74c3c;35,#3498db;25,#2ecc71"
+		     data-title="Distribuição de orçamento 2024"
+		     data-legend="Pessoal (40%);Infraestrutura (35%);Capacitação (25%)">
+		</div>
+
+		<!-- ── Exemplos: tipos de forma ──────────────────────────── -->
 
 		<h2>Eleição presidencial dos EUA, 2016</h2>
 		<p>31 estados Republicanos vs. 21 estados Democratas</p>
@@ -46,7 +64,6 @@
 		     data-per-column="10"
 		     data-type="humans"
 		     data-segments="63,red;33,blue"
-		     data-title="Eleição presidencial dos EUA, 2016"
 		     data-legend="Republicanos (63%);Democratas (33%)">
 		</div>
 
@@ -57,7 +74,6 @@
 		     data-per-column="10"
 		     data-type="box"
 		     data-segments="45,red;55,black"
-		     data-title="Participação eleitoral (VAP)"
 		     data-legend="Votaram (45%);Não votaram (55%)">
 		</div>
 
@@ -68,7 +84,6 @@
 		     data-per-column="10"
 		     data-type="circle"
 		     data-segments="38,red;25,blue;33,dark"
-		     data-title="Equilíbrio partidário"
 		     data-legend="Democratas (38%);Republicanos (25%);Independentes (33%)">
 		</div>
 
@@ -84,7 +99,6 @@
 		     data-per-column="12"
 		     data-type="soccer"
 		     data-segments="40,#27ae60;25,#f1c40f;35,#e74c3c"
-		     data-title="Resultados Copa do Mundo FIFA 2022 — Fase de Grupos"
 		     data-legend="Vitória do time 1 (~40%);Empate (~25%);Vitória do time 2 (~35%)">
 		</div>
 
@@ -132,7 +146,6 @@
 		     data-per-column="5"
 		     data-type="trophy"
 		     data-segments="26,#009c3b;22,#333333;22,#0066cc;16,#74acdf;14,#0055a4"
-		     data-title="Top 5 — Copa do Mundo FIFA (1930–2022)"
 		     data-legend="🇧🇷 Brasil (5 títulos);🇩🇪 Alemanha (4 títulos);🇮🇹 Itália (4 títulos);🇦🇷 Argentina (3 títulos);🇫🇷 França (2 títulos)">
 		</div>
 

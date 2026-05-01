@@ -22,7 +22,15 @@ HTML [data-infographic] attributes
         → buildHuman / buildBox / buildCircle / buildSoccer / buildTrophy
 ```
 
-The programmatic API (`window.doGraph`) is a thin wrapper that validates its arguments and calls `render()` directly.
+The programmatic API (`window.doGraph`) is a thin wrapper that validates its arguments and calls `render()` directly. An optional 6th argument `{ title, legend }` adds a title paragraph and a colour-swatch legend.
+
+### Title and legend
+
+`render()` accepts two optional trailing parameters: `title` (string) and `legendLabels` (string array). When present:
+- A `<p>` element with the title text is prepended above the SVG.
+- A flex row of colour swatches + label spans is appended below the SVG; items with empty labels are skipped.
+
+Declarative equivalents: `data-title` and `data-legend="label1;label2;..."` (both optional).
 
 ### Rendering logic
 
@@ -49,10 +57,10 @@ The library is a side-effect-only IIFE, so tests use a `loadLib()` helper that c
 
 Run `npm test` inside `wordpress-plugin/infographic-svg-block/` (requires `npm install` first). Uses `wp-scripts test-unit-js` (Jest + `@wordpress/jest-preset-default`).
 
-- `utils.test.js` — `parseSegments` and `serializeSegments` pure-function tests
+- `utils.test.js` — `parseSegments`, `serializeSegments`, `parseLegend`, `serializeLegend` pure-function tests
 - `save.test.js` — `save()` component tests via `@testing-library/react`; `@wordpress/block-editor` is mocked
 
-`parseSegments` and `serializeSegments` are defined in `src/utils.js` and imported by `edit.js`.
+`parseSegments`, `serializeSegments`, `parseLegend`, and `serializeLegend` are defined in `src/utils.js` and imported by `edit.js`.
 
 ### CI pipeline
 
