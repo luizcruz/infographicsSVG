@@ -362,16 +362,18 @@ describe('doGraph – title and legend (options param)', () => {
             legend: ['', 'Only B'],
         });
         const el = document.getElementById('t');
-        const spans = Array.from(el.querySelectorAll('span span')).map(s => s.textContent);
-        expect(spans).not.toContain('');
-        expect(spans).toContain('Only B');
+        // Legend div is appended after SVG; only one item rendered ('Only B')
+        const legendWrap = el.lastElementChild;
+        expect(legendWrap.tagName).toBe('DIV');
+        expect(legendWrap.children.length).toBe(1);
+        expect(legendWrap.children[0].textContent).toContain('Only B');
     });
 
     test('does not render legend container when all labels are empty', () => {
         window.doGraph(4, 2, [[100, 'red']], 'box', 't', { legend: ['', ''] });
-        // No div with children should be appended after the SVG
-        const children = Array.from(document.getElementById('t').children);
-        expect(children.every(c => c.tagName === 'SVG')).toBe(true);
+        // Only the SVG is appended — no legend div
+        const el = document.getElementById('t');
+        expect(el.children.length).toBe(1);
     });
 
     test('title and legend can appear together', () => {
@@ -433,11 +435,12 @@ describe('Declarative API – data-title and data-legend', () => {
                  data-type="box" data-segments="60,red;40,blue"
                  data-legend=";Only second"></div>`;
         loadLib();
-        const spans = Array.from(
-            document.querySelectorAll('[data-infographic] span span')
-        ).map(s => s.textContent);
-        expect(spans).not.toContain('');
-        expect(spans).toContain('Only second');
+        // Legend div is last child; only one item should be present
+        const el = document.querySelector('[data-infographic]');
+        const legendWrap = el.lastElementChild;
+        expect(legendWrap.tagName).toBe('DIV');
+        expect(legendWrap.children.length).toBe(1);
+        expect(legendWrap.children[0].textContent).toContain('Only second');
     });
 });
 
