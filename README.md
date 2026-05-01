@@ -156,6 +156,33 @@ doGraph(totalItens, itensPorColuna, [[porcentagem, cor], ...], tipo, idDoElement
 
 ---
 
+## Testes
+
+### Biblioteca principal
+
+```bash
+npm install
+npm test
+```
+
+Testes em `tests/infographicSVG.test.js` cobrem validação de entradas, whitelist de cores, todos os tipos de forma, dimensões do SVG e invariantes de segurança.
+
+### Bloco Gutenberg
+
+```bash
+cd wordpress-plugin/infographic-svg-block
+npm install
+npm test
+```
+
+Testes em `src/__tests__/` cobrem `parseSegments`, `serializeSegments` e o componente `save()`.
+
+### Pipeline
+
+Os testes rodam automaticamente no GitHub Actions em todo push e pull request. O deploy para o GitHub Pages só ocorre se todos os testes passarem.
+
+---
+
 ## Exemplos completos
 
 Veja [`graph.html`](graph.html) para exemplos funcionais de todos os tipos, incluindo:

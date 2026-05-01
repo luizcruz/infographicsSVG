@@ -1,0 +1,17 @@
+{
+    "name": "infographics-svg",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Zero-dependency SVG pictogram infographic library",
+    "scripts": {
+        "test": "jest"
+    },
+    "jest": {
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/**/*.test.js"]
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0"
+    }
+}

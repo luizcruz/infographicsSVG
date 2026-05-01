@@ -1,12 +1,12 @@
-# Deploys the site to GitHub Pages on every push to master.
+# Runs tests on every push and PR; deploys to GitHub Pages on master only.
 # Requires GitHub Pages source to be set to "GitHub Actions" in:
 #   Repository Settings → Pages → Source → GitHub Actions
 
-name: Deploy to GitHub Pages
+name: CI
 
 on:
   push:
-    branches: [master]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -15,11 +15,38 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Run library tests
+        run: npm test
+
+      - name: Install block dependencies
+        run: npm install
+        working-directory: wordpress-plugin/infographic-svg-block
+
+      - name: Run block tests
+        run: npm test
+        working-directory: wordpress-plugin/infographic-svg-block
+
   deploy:
+    needs: test
+    if: github.ref == 'refs/heads/master'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

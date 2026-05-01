@@ -11,6 +11,7 @@ import {
     Popover,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { parseSegments, serializeSegments } from './utils';
 
 const SHAPE_OPTIONS = [
     { label: __( 'Humans', 'infographic-svg-block' ),  value: 'humans'  },
@@ -19,28 +20,6 @@ const SHAPE_OPTIONS = [
     { label: __( 'Soccer', 'infographic-svg-block' ),  value: 'soccer'  },
     { label: __( 'Trophy', 'infographic-svg-block' ),  value: 'trophy'  },
 ];
-
-/**
- * Parses "pct,color;pct,color;..." into [{pct, color}, ...].
- * Returns empty array on parse failure.
- */
-function parseSegments( raw ) {
-    if ( ! raw ) return [];
-    return raw.split( ';' ).reduce( ( acc, pair ) => {
-        const parts = pair.trim().split( ',' );
-        if ( parts.length === 2 ) {
-            const pct = parseFloat( parts[ 0 ] );
-            const color = parts[ 1 ].trim();
-            if ( ! isNaN( pct ) && color ) acc.push( { pct, color } );
-        }
-        return acc;
-    }, [] );
-}
-
-/** Serializes [{pct, color}, ...] back to "pct,color;..." */
-function serializeSegments( segs ) {
-    return segs.map( s => `${ s.pct },${ s.color }` ).join( ';' );
-}
 
 function SegmentRow( { seg, index, onChange, onRemove, canRemove } ) {
     const [ pickerOpen, setPickerOpen ] = useState( false );
