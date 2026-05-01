@@ -5,7 +5,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * The library initialises any [data-infographic] element automatically.
  */
 export default function save( { attributes } ) {
-    const { items, perColumn, type, segments } = attributes;
+    const { items, perColumn, type, segments, title, legend } = attributes;
 
     return (
         <div { ...useBlockProps.save() }>
@@ -15,6 +15,8 @@ export default function save( { attributes } ) {
                 data-per-column={ perColumn }
                 data-type={ type }
                 data-segments={ segments }
+                data-title={ title || undefined }
+                data-legend={ legend || undefined }
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import { parseSegments, serializeSegments } from '../utils';
+import { parseSegments, serializeSegments, parseLegend, serializeLegend } from '../utils';
 
 // ── parseSegments ──────────────────────────────────────────────────────────
 
@@ -105,5 +105,60 @@ describe( 'serializeSegments', () => {
             { pct: 20, color: 'gray' },
         ];
         expect( serializeSegments( segs ) ).toBe( '20,red;20,blue;20,green;20,gold;20,gray' );
+    } );
+} );
+
+// ── parseLegend ────────────────────────────────────────────────────────────
+
+describe( 'parseLegend', () => {
+    test( 'parses two labels', () => {
+        expect( parseLegend( 'Label A;Label B' ) ).toEqual( [ 'Label A', 'Label B' ] );
+    } );
+
+    test( 'trims whitespace', () => {
+        expect( parseLegend( ' Label A ; Label B ' ) ).toEqual( [ 'Label A', 'Label B' ] );
+    } );
+
+    test( 'returns empty array for empty string', () => {
+        expect( parseLegend( '' ) ).toEqual( [] );
+    } );
+
+    test( 'returns empty array for null', () => {
+        expect( parseLegend( null ) ).toEqual( [] );
+    } );
+
+    test( 'returns empty array for undefined', () => {
+        expect( parseLegend( undefined ) ).toEqual( [] );
+    } );
+
+    test( 'preserves empty labels within the array', () => {
+        expect( parseLegend( ';Only second' ) ).toEqual( [ '', 'Only second' ] );
+    } );
+
+    test( 'parses five labels', () => {
+        const result = parseLegend( 'A;B;C;D;E' );
+        expect( result ).toHaveLength( 5 );
+        expect( result[ 4 ] ).toBe( 'E' );
+    } );
+} );
+
+// ── serializeLegend ────────────────────────────────────────────────────────
+
+describe( 'serializeLegend', () => {
+    test( 'serializes two labels', () => {
+        expect( serializeLegend( [ 'Label A', 'Label B' ] ) ).toBe( 'Label A;Label B' );
+    } );
+
+    test( 'returns empty string for empty array', () => {
+        expect( serializeLegend( [] ) ).toBe( '' );
+    } );
+
+    test( 'round-trips with parseLegend', () => {
+        const original = 'Alpha;Beta;Gamma';
+        expect( serializeLegend( parseLegend( original ) ) ).toBe( original );
+    } );
+
+    test( 'preserves empty labels', () => {
+        expect( serializeLegend( [ '', 'Second' ] ) ).toBe( ';Second' );
     } );
 } );

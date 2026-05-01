@@ -19,3 +19,14 @@ export function parseSegments( raw ) {
 export function serializeSegments( segs ) {
     return segs.map( s => `${ s.pct },${ s.color }` ).join( ';' );
 }
+
+/** Parses "label1;label2;..." into an array of trimmed strings. */
+export function parseLegend( raw ) {
+    if ( ! raw ) return [];
+    return raw.split( ';' ).map( s => s.trim() );
+}
+
+/** Serializes an array of label strings back to "label1;label2;..." */
+export function serializeLegend( labels ) {
+    return labels.join( ';' );
+}

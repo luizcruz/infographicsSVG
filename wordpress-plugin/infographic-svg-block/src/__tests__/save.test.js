@@ -13,6 +13,8 @@ const baseAttributes = {
     perColumn: 10,
     type: 'humans',
     segments: '63,red;33,blue',
+    title: '',
+    legend: '',
 };
 
 describe( 'save()', () => {
@@ -69,5 +71,33 @@ describe( 'save()', () => {
         expect(
             container.querySelector( '[data-infographic]' ).getAttribute( 'data-segments' )
         ).toBe( '50,#ff0000;50,#0000ff' );
+    } );
+
+    test( 'sets data-title when title is non-empty', () => {
+        const { container } = render(
+            save( { attributes: { ...baseAttributes, title: 'My Chart' } } )
+        );
+        const el = container.querySelector( '[data-infographic]' );
+        expect( el.getAttribute( 'data-title' ) ).toBe( 'My Chart' );
+    } );
+
+    test( 'omits data-title attribute when title is empty', () => {
+        const { container } = render( save( { attributes: baseAttributes } ) );
+        const el = container.querySelector( '[data-infographic]' );
+        expect( el.hasAttribute( 'data-title' ) ).toBe( false );
+    } );
+
+    test( 'sets data-legend when legend is non-empty', () => {
+        const { container } = render(
+            save( { attributes: { ...baseAttributes, legend: 'Red;Blue' } } )
+        );
+        const el = container.querySelector( '[data-infographic]' );
+        expect( el.getAttribute( 'data-legend' ) ).toBe( 'Red;Blue' );
+    } );
+
+    test( 'omits data-legend attribute when legend is empty', () => {
+        const { container } = render( save( { attributes: baseAttributes } ) );
+        const el = container.querySelector( '[data-infographic]' );
+        expect( el.hasAttribute( 'data-legend' ) ).toBe( false );
     } );
 } );
