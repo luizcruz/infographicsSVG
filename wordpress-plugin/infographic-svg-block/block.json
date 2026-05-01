@@ -25,6 +25,14 @@
         "segments": {
             "type": "string",
             "default": "60,#27ae60;40,#e74c3c"
+        },
+        "title": {
+            "type": "string",
+            "default": ""
+        },
+        "legend": {
+            "type": "string",
+            "default": ""
         }
     },
     "supports": {

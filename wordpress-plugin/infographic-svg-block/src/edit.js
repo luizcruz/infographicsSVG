@@ -11,7 +11,7 @@ import {
     Popover,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { parseSegments, serializeSegments } from './utils';
+import { parseSegments, serializeSegments, parseLegend, serializeLegend } from './utils';
 
 const SHAPE_OPTIONS = [
     { label: __( 'Humans', 'infographic-svg-block' ),  value: 'humans'  },
@@ -21,7 +21,7 @@ const SHAPE_OPTIONS = [
     { label: __( 'Trophy', 'infographic-svg-block' ),  value: 'trophy'  },
 ];
 
-function SegmentRow( { seg, index, onChange, onRemove, canRemove } ) {
+function SegmentRow( { seg, index, onChange, onRemove, canRemove, legendLabel, onLabelChange } ) {
     const [ pickerOpen, setPickerOpen ] = useState( false );
 
     return (
@@ -70,28 +70,49 @@ function SegmentRow( { seg, index, onChange, onRemove, canRemove } ) {
                 min={ 1 }
                 max={ 100 }
             />
+            <TextControl
+                label={ __( 'Legend label', 'infographic-svg-block' ) }
+                value={ legendLabel }
+                onChange={ val => onLabelChange( index, val ) }
+                placeholder={ __( 'Optional', 'infographic-svg-block' ) }
+            />
         </PanelRow>
     );
 }
 
 export default function Edit( { attributes, setAttributes } ) {
-    const { items, perColumn, type, segments } = attributes;
+    const { items, perColumn, type, segments, title, legend } = attributes;
     const blockProps = useBlockProps();
     const segs = parseSegments( segments );
+    const rawLabels = parseLegend( legend );
+    const legendLabels = segs.map( ( _, i ) => rawLabels[ i ] !== undefined ? rawLabels[ i ] : '' );
 
     function updateSeg( idx, updated ) {
         const next = segs.map( ( s, i ) => ( i === idx ? updated : s ) );
         setAttributes( { segments: serializeSegments( next ) } );
     }
 
+    function updateLabel( idx, label ) {
+        const next = legendLabels.map( ( l, i ) => ( i === idx ? label : l ) );
+        setAttributes( { legend: serializeLegend( next ) } );
+    }
+
     function removeSeg( idx ) {
         const next = segs.filter( ( _, i ) => i !== idx );
-        setAttributes( { segments: serializeSegments( next ) } );
+        const nextLabels = legendLabels.filter( ( _, i ) => i !== idx );
+        setAttributes( {
+            segments: serializeSegments( next ),
+            legend: serializeLegend( nextLabels ),
+        } );
     }
 
     function addSeg() {
         const next = [ ...segs, { pct: 10, color: '#cccccc' } ];
-        setAttributes( { segments: serializeSegments( next ) } );
+        const nextLabels = [ ...legendLabels, '' ];
+        setAttributes( {
+            segments: serializeSegments( next ),
+            legend: serializeLegend( nextLabels ),
+        } );
     }
 
     const totalPct = segs.reduce( ( s, seg ) => s + seg.pct, 0 );
@@ -120,6 +141,12 @@ export default function Edit( { attributes, setAttributes } ) {
                         min={ 1 }
                         max={ 100 }
                     />
+                    <TextControl
+                        label={ __( 'Title', 'infographic-svg-block' ) }
+                        value={ title }
+                        onChange={ val => setAttributes( { title: val } ) }
+                        placeholder={ __( 'Optional', 'infographic-svg-block' ) }
+                    />
                 </PanelBody>
 
                 <PanelBody title={ __( 'Segments', 'infographic-svg-block' ) } initialOpen={ true }>
@@ -139,6 +166,8 @@ export default function Edit( { attributes, setAttributes } ) {
                             onChange={ updateSeg }
                             onRemove={ removeSeg }
                             canRemove={ segs.length > 1 }
+                            legendLabel={ legendLabels[ i ] }
+                            onLabelChange={ updateLabel }
                         />
                     ) ) }
                     <Button variant="secondary" onClick={ addSeg } style={ { width: '100%' } }>
@@ -154,6 +183,8 @@ export default function Edit( { attributes, setAttributes } ) {
                     data-per-column={ perColumn }
                     data-type={ type }
                     data-segments={ segments }
+                    data-title={ title || undefined }
+                    data-legend={ legend || undefined }
                 />
                 <p style={ { fontSize: '0.75em', color: '#888', marginTop: 4 } }>
                     { __( 'Infographic SVG — preview rendered on the frontend.', 'infographic-svg-block' ) }

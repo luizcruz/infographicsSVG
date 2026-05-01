@@ -320,6 +320,130 @@ describe('Declarative API – [data-infographic]', () => {
     });
 });
 
+// ── Title and Legend ──────────────────────────────────────────────────────
+
+describe('doGraph – title and legend (options param)', () => {
+    beforeEach(() => {
+        document.body.innerHTML = '<div id="t"></div>';
+        loadLib();
+    });
+
+    test('renders title paragraph when title option is provided', () => {
+        window.doGraph(4, 2, [[100, 'red']], 'box', 't', { title: 'My Chart' });
+        const el = document.getElementById('t');
+        const p = el.querySelector('p');
+        expect(p).not.toBeNull();
+        expect(p.textContent).toBe('My Chart');
+    });
+
+    test('does not render title when option is absent', () => {
+        window.doGraph(4, 2, [[100, 'red']], 'box', 't');
+        expect(document.getElementById('t').querySelector('p')).toBeNull();
+    });
+
+    test('does not render title when title is empty string', () => {
+        window.doGraph(4, 2, [[100, 'red']], 'box', 't', { title: '' });
+        expect(document.getElementById('t').querySelector('p')).toBeNull();
+    });
+
+    test('renders legend items when legend option is provided', () => {
+        window.doGraph(4, 2, [[60, 'red'], [40, 'blue']], 'box', 't', {
+            legend: ['Segment A', 'Segment B'],
+        });
+        const el = document.getElementById('t');
+        const spans = el.querySelectorAll('span span'); // inner text spans
+        const texts = Array.from(spans).map(s => s.textContent);
+        expect(texts).toContain('Segment A');
+        expect(texts).toContain('Segment B');
+    });
+
+    test('skips legend items with empty labels', () => {
+        window.doGraph(4, 2, [[60, 'red'], [40, 'blue']], 'box', 't', {
+            legend: ['', 'Only B'],
+        });
+        const el = document.getElementById('t');
+        // Legend div is appended after SVG; only one item rendered ('Only B')
+        const legendWrap = el.lastElementChild;
+        expect(legendWrap.tagName).toBe('DIV');
+        expect(legendWrap.children.length).toBe(1);
+        expect(legendWrap.children[0].textContent).toContain('Only B');
+    });
+
+    test('does not render legend container when all labels are empty', () => {
+        window.doGraph(4, 2, [[100, 'red']], 'box', 't', { legend: ['', ''] });
+        // Only the SVG is appended — no legend div
+        const el = document.getElementById('t');
+        expect(el.children.length).toBe(1);
+    });
+
+    test('title and legend can appear together', () => {
+        window.doGraph(4, 2, [[100, 'red']], 'box', 't', {
+            title: 'Both',
+            legend: ['Red items'],
+        });
+        const el = document.getElementById('t');
+        expect(el.querySelector('p').textContent).toBe('Both');
+        const spans = Array.from(el.querySelectorAll('span span')).map(s => s.textContent);
+        expect(spans).toContain('Red items');
+    });
+});
+
+describe('Declarative API – data-title and data-legend', () => {
+    test('renders title from data-title attribute', () => {
+        document.body.innerHTML = `
+            <div data-infographic data-items="4" data-per-column="2"
+                 data-type="box" data-segments="100,blue"
+                 data-title="My Title"></div>`;
+        loadLib();
+        const p = document.querySelector('[data-infographic] p');
+        expect(p).not.toBeNull();
+        expect(p.textContent).toBe('My Title');
+    });
+
+    test('does not render title when data-title is absent', () => {
+        document.body.innerHTML = `
+            <div data-infographic data-items="4" data-per-column="2"
+                 data-type="box" data-segments="100,blue"></div>`;
+        loadLib();
+        expect(document.querySelector('[data-infographic] p')).toBeNull();
+    });
+
+    test('renders legend from data-legend attribute', () => {
+        document.body.innerHTML = `
+            <div data-infographic data-items="4" data-per-column="2"
+                 data-type="box" data-segments="60,red;40,blue"
+                 data-legend="Label A;Label B"></div>`;
+        loadLib();
+        const spans = Array.from(
+            document.querySelectorAll('[data-infographic] span span')
+        ).map(s => s.textContent);
+        expect(spans).toContain('Label A');
+        expect(spans).toContain('Label B');
+    });
+
+    test('does not render legend when data-legend is absent', () => {
+        document.body.innerHTML = `
+            <div data-infographic data-items="4" data-per-column="2"
+                 data-type="box" data-segments="100,blue"></div>`;
+        loadLib();
+        expect(document.querySelector('[data-infographic] span')).toBeNull();
+    });
+
+    test('partial labels: only renders items with non-empty text', () => {
+        document.body.innerHTML = `
+            <div data-infographic data-items="4" data-per-column="2"
+                 data-type="box" data-segments="60,red;40,blue"
+                 data-legend=";Only second"></div>`;
+        loadLib();
+        // Legend div is last child; only one item should be present
+        const el = document.querySelector('[data-infographic]');
+        const legendWrap = el.lastElementChild;
+        expect(legendWrap.tagName).toBe('DIV');
+        expect(legendWrap.children.length).toBe(1);
+        expect(legendWrap.children[0].textContent).toContain('Only second');
+    });
+});
+
 // ── Security invariants ────────────────────────────────────────────────────
 
 describe('Security invariants', () => {
