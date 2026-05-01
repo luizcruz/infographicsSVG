@@ -25,7 +25,9 @@ Adicione o atributo `data-infographic` a qualquer `<div>` e configure os demais 
      data-items="40"
      data-per-column="10"
      data-type="humans"
-     data-segments="63,red;33,blue">
+     data-segments="63,red;33,blue"
+     data-title="Eleição EUA 2016"
+     data-legend="Republicanos (63%);Democratas (33%)">
 </div>
 ```
 
@@ -38,6 +40,8 @@ Adicione o atributo `data-infographic` a qualquer `<div>` e configure os demais 
 | `data-per-column` | ✅ | Quantidade de ícones por coluna |
 | `data-type` | ✅ | Tipo de forma — ver tabela abaixo |
 | `data-segments` | ✅ | Distribuição de cores — ver formato abaixo |
+| `data-title` | ➖ | Título exibido acima do gráfico |
+| `data-legend` | ➖ | Legenda colorida abaixo do gráfico — ver formato abaixo |
 
 ### Formato de `data-segments`
 
@@ -45,7 +49,7 @@ Adicione o atributo `data-infographic` a qualquer `<div>` e configure os demais 
 "porcentagem,cor;porcentagem,cor;..."
 ```
 
-- **Porcentagem**: número inteiro de 0 a 100
+- **Porcentagem**: número de 0 a 100
 - **Cor**: código hexadecimal (`#rgb` ou `#rrggbb`) ou nome CSS alfabético (`red`, `gold`, `black`…)
 - Os segmentos são separados por `;` e a porcentagem da cor por `,`
 
@@ -55,6 +59,18 @@ data-segments="45,#e74c3c;30,#f1c40f;25,#27ae60"
 ```
 
 > **Nota:** as porcentagens não precisam somar exatamente 100%. Itens excedentes recebem a cor do último segmento.
+
+### Formato de `data-legend`
+
+```
+"descrição1;descrição2;..."
+```
+
+Cada posição corresponde ao segmento de mesmo índice em `data-segments`. A cor do swatch é extraída automaticamente do segmento correspondente. Posições vazias são omitidas.
+
+```html
+data-legend="Partido A (63%);Partido B (33%)"
+```
 
 ---
 
@@ -69,7 +85,8 @@ Ideal para representar populações ou grupos de pessoas.
      data-items="40"
      data-per-column="10"
      data-type="humans"
-     data-segments="63,red;33,blue">
+     data-segments="63,red;33,blue"
+     data-legend="Republicanos (63%);Democratas (33%)">
 </div>
 ```
 
@@ -82,7 +99,8 @@ Indicado para comparações simples entre categorias.
      data-items="40"
      data-per-column="10"
      data-type="box"
-     data-segments="45,red;55,black">
+     data-segments="45,red;55,black"
+     data-legend="Votaram (45%);Não votaram (55%)">
 </div>
 ```
 
@@ -95,7 +113,9 @@ Boa escolha para dados com três ou mais categorias.
      data-items="40"
      data-per-column="10"
      data-type="circle"
-     data-segments="38,red;25,blue;33,darkgray">
+     data-segments="38,red;25,blue;33,darkgray"
+     data-title="Equilíbrio partidário"
+     data-legend="Democratas (38%);Republicanos (25%);Independentes (33%)">
 </div>
 ```
 
@@ -108,7 +128,8 @@ Círculo colorido com patch pentagonal e linhas de costura, ideal para dados esp
      data-items="48"
      data-per-column="12"
      data-type="soccer"
-     data-segments="40,#27ae60;25,#f1c40f;35,#e74c3c">
+     data-segments="40,#27ae60;25,#f1c40f;35,#e74c3c"
+     data-legend="Vitória (~40%);Empate (~25%);Derrota (~35%)">
 </div>
 ```
 
@@ -121,7 +142,8 @@ Silhueta de troféu com alças, haste e base. Cada ícone representa uma conquis
      data-items="18"
      data-per-column="5"
      data-type="trophy"
-     data-segments="26,#009c3b;22,#333333;22,#0066cc;16,#74acdf;14,#0055a4">
+     data-segments="26,#009c3b;22,#333333;22,#0066cc;16,#74acdf;14,#0055a4"
+     data-legend="Brasil (5);Alemanha (4);Itália (4);Argentina (3);França (2)">
 </div>
 ```
 
@@ -141,6 +163,23 @@ doGraph(totalItens, itensPorColuna, [[porcentagem, cor], ...], tipo, idDoElement
 <script>
   doGraph(40, 10, [[63, 'red'], [33, 'blue']], 'humans', 'meu-grafico');
 </script>
+```
+
+### Opções de título e legenda (6º parâmetro)
+
+Passe um objeto opcional como 6º argumento para adicionar título e legenda:
+
+```javascript
+doGraph(
+  40, 10,
+  [[63, 'red'], [33, 'blue']],
+  'humans',
+  'meu-grafico',
+  {
+    title: 'Eleição EUA 2016',
+    legend: ['Republicanos (63%)', 'Democratas (33%)']
+  }
+);
 ```
 
 > As mesmas validações de segurança se aplicam: cores são validadas por whitelist e o total de itens é limitado a 500.
@@ -165,7 +204,7 @@ npm install
 npm test
 ```
 
-Testes em `tests/infographicSVG.test.js` cobrem validação de entradas, whitelist de cores, todos os tipos de forma, dimensões do SVG e invariantes de segurança.
+Testes em `tests/infographicSVG.test.js` cobrem validação de entradas, whitelist de cores, todos os tipos de forma, dimensões do SVG, invariantes de segurança, e os novos recursos de título e legenda.
 
 ### Bloco Gutenberg
 
@@ -175,7 +214,7 @@ npm install
 npm test
 ```
 
-Testes em `src/__tests__/` cobrem `parseSegments`, `serializeSegments` e o componente `save()`.
+Testes em `src/__tests__/` cobrem `parseSegments`, `serializeSegments`, `parseLegend`, `serializeLegend` e o componente `save()`.
 
 ### Pipeline
 
@@ -187,6 +226,7 @@ Os testes rodam automaticamente no GitHub Actions em todo push e pull request. O
 
 Veja [`graph.html`](graph.html) para exemplos funcionais de todos os tipos, incluindo:
 
+- Exemplo auto-suficiente com título e legenda integrados (circle)
 - Eleição presidencial dos EUA (humans)
 - Participação eleitoral (box)
 - Equilíbrio partidário (circle)
