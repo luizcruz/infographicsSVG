@@ -122,7 +122,7 @@ describe('doGraph – shape types', () => {
         loadLib();
     });
 
-    ['humans', 'box', 'circle', 'soccer', 'trophy'].forEach(type => {
+    ['humans', 'box', 'circle', 'soccer', 'trophy', 'glove'].forEach(type => {
         test(`renders an SVG for shape type "${type}"`, () => {
             window.doGraph(4, 2, [[100, 'steelblue']], type, 't');
             const svg = document.getElementById('t').querySelector('svg');
@@ -141,6 +141,7 @@ describe('doGraph – SVG dimensions', () => {
         { type: 'circle', wMul: 12, hMul: 5  },
         { type: 'soccer', wMul: 12, hMul: 5  },
         { type: 'trophy', wMul: 14, hMul: 10 },
+        { type: 'glove',  wMul: 14, hMul: 11 },
     ];
 
     beforeEach(() => {
@@ -194,6 +195,12 @@ describe('doGraph – rendered element counts', () => {
         window.doGraph(2, 2, [[100, 'goldenrod']], 'trophy', 't');
         const groups = document.getElementById('t').querySelectorAll('svg > g');
         expect(groups.length).toBe(2);
+    });
+
+    test('glove: one <g> per item', () => {
+        window.doGraph(3, 3, [[100, 'orange']], 'glove', 't');
+        const groups = document.getElementById('t').querySelectorAll('svg > g');
+        expect(groups.length).toBe(3);
     });
 });
 
