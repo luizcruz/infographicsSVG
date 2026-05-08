@@ -19,7 +19,7 @@ HTML [data-infographic] attributes
   → initAll() scans DOM on DOMContentLoaded (or immediately if already loaded)
     → initElement() validates each container's attributes
       → render() creates SVG element and appends shape nodes
-        → buildHuman / buildBox / buildCircle / buildSoccer / buildTrophy
+        → buildHuman / buildBox / buildCircle / buildSoccer / buildTrophy / buildGlove
 ```
 
 The programmatic API (`window.doGraph`) is a thin wrapper that validates its arguments and calls `render()` directly. An optional 6th argument `{ title, legend }` adds a title paragraph and a colour-swatch legend.
@@ -51,7 +51,7 @@ SVG viewport dimensions are computed from `numberOfItems` using hardcoded multip
 
 Run `npm test` at the repo root (requires `npm install` first). Uses Jest + `jest-environment-jsdom`.
 
-The library is a side-effect-only IIFE, so tests use a `loadLib()` helper that calls `jest.resetModules()` + `require()` before each test, re-executing the IIFE against fresh DOM state. Covers: `doGraph` validation, color whitelist, all five shape types, SVG dimensions, element counts, multiple segments, declarative `[data-infographic]` API, security invariants.
+The library is a side-effect-only IIFE, so tests use a `loadLib()` helper that calls `jest.resetModules()` + `require()` before each test, re-executing the IIFE against fresh DOM state. Covers: `doGraph` validation, color whitelist, all six shape types, SVG dimensions, element counts, multiple segments, declarative `[data-infographic]` API, security invariants.
 
 ### Gutenberg block (`wordpress-plugin/infographic-svg-block/src/__tests__/`)
 
